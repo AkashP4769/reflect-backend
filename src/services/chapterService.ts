@@ -26,8 +26,8 @@ class ChapterService{
     }
 
     public async createChapter(chapterData: IChapter): Promise<IChapter> {
-        //const newChapter = new Chapter(chapterData);
-        const chapters = await Chapter.find();
+        const newChapter = new Chapter(chapterData);
+        /*const chapters = await Chapter.find();
         for (const chapter of chapters) {
             if (chapter && chapter.entries) {
                 let updated = false;
@@ -46,10 +46,10 @@ class ChapterService{
                     await chapter.save(); // Save the chapter with updated entries
                 }
             }
-        }
+        }*/
 
-        return chapters[0];
-        //return newChapter.save();
+        //return chapters[0];
+        return newChapter.save();
     }
 
     public async updateChapter(chapterData: IChapter, id: string, date: string) : Promise<IChapter | null> {

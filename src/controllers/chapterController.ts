@@ -14,7 +14,7 @@ export const getChapters = async (req: Request, res: Response) : Promise<void> =
         const chapters = await ChapterService.getChapters(uid as string, new Date(date as string), _explicit);
         if(chapters){
             console.log("Chapters fetched! from uid: " + uid);
-            console.log(chapters);
+            //console.log(chapters);
             res.status(200).json(chapters);
         }
         else{
@@ -31,15 +31,15 @@ export const createChapter = async (req: Request, res: Response) : Promise<void>
     try{
         const {chapter} = req.body;
         const _chapter = await ChapterService.createChapter(chapter as IChapter);
-        //await userService.linkChapterToUser(chapter.uid, _chapter._id as string);
+        await userService.linkChapterToUser(chapter.uid, _chapter._id as string);
 
-        /*if(_chapter){
+        if(_chapter){
             console.log("Chapter created! " + _chapter._id);
             await timestampService.updateChapterTimestamp(chapter.uid);
             res.status(201).json(_chapter);
         }
-        else res.status(409).json({message: "Chapter already exists"});*/
-        res.status(201).json({chapter: _chapter});
+        else res.status(409).json({message: "Chapter already exists"});
+        //res.status(201).json({chapter: _chapter});
         
     } catch(error: any){
         console.log(error.message);
