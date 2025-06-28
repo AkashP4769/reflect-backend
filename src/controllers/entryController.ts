@@ -22,6 +22,16 @@ export const getAllEntriesOfChapter = async (req: Request, res: Response) : Prom
         
         if(chapterLastUpdated && chapterLastUpdated > new Date(date as string)){
             const entries = await EntryService.getEntries(chapterId as string);
+            if(entries && entries.length > 0){
+                console.log("Entries found for chapter: " + chapterId);
+                for(const entry of entries){
+                    entry.imageUrl = entry.imageUrl?.map(url => url.replace('reflectimages.', 'reflectimages2.'));
+                }
+            }
+            else{
+                console.log("No entries found for chapter: " + chapterId);
+            }
+
             console.log("Entries found!");
             res.status(200).json(entries);
         }

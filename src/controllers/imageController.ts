@@ -32,3 +32,10 @@ export const imageDelete = async (req: Request, res: Response) : Promise<void> =
         res.status(500).json({error:error.message});
     }
 }
+
+export const updateImageUrls = (imageUrl: string[]): string[] => {
+    if (!imageUrl || !Array.isArray(imageUrl)) {
+        return [];
+    }
+    return imageUrl.map(url => url.replace('reflectimages.', 'reflectimages2.'));
+}

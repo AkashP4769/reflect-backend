@@ -14,7 +14,11 @@ export const getChapters = async (req: Request, res: Response) : Promise<void> =
         const chapters = await ChapterService.getChapters(uid as string, new Date(date as string), _explicit);
         if(chapters){
             console.log("Chapters fetched! from uid: " + uid);
-            //console.log(chapters);
+
+            for(const chapter of chapters){
+                chapter.imageUrl = chapter.imageUrl?.map(url => url.replace('reflectimages.', 'reflectimages2.'));
+            }
+
             res.status(200).json(chapters);
         }
         else{
