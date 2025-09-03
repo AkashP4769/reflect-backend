@@ -1,5 +1,6 @@
 // src/app.ts
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 import userRoutes from './routes/userRoutes';
 import dotenv from 'dotenv';
@@ -11,6 +12,8 @@ import imageRoutes from './routes/imageRoutes';
 dotenv.config();
 
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT || 3000;
 connectDB();
 
