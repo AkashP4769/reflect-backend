@@ -18,13 +18,11 @@ class EntryService{
     public async createEntry(entry: IEntry, chapterId: string) : Promise<IEntry>{
         const chapter = await chapterService.getChapterById(chapterId);
         if(chapter){
+            console.log("subsections: " + JSON.stringify(entry.subsections));
             if(entry._id == null) entry._id = new mongoose.Types.ObjectId();
-            if(chapter.entries){
-                chapter.entries.push(entry);
-            }
-            else{
-                chapter.entries = [entry];
-            }
+            if(chapter.entries) chapter.entries.push(entry);
+            else chapter.entries = [entry];
+
             chapter.entryCount = chapter.entries.length;
             chapter.save();
         }
@@ -72,6 +70,7 @@ class EntryService{
                 if(index != -1){
                     chapter.entries[index] = entry;
                     chapter.entries[index].content = entry.content;
+                    chapter.entries[index].subsections = entry.subsections;
 
                     const newImages: {[key: string]: boolean} = {};
                     for(const url of entry.imageUrl){

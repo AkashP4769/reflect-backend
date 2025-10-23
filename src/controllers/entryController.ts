@@ -12,6 +12,7 @@ export const getAllEntriesOfChapter = async (req: Request, res: Response) : Prom
         console.log("explicit: " + _explicit);
 
         if(_explicit){
+            console.log("explicit fetching");
             const entries = await EntryService.getEntries(chapterId as string);
             res.status(200).json(entries);
             return;
@@ -25,6 +26,7 @@ export const getAllEntriesOfChapter = async (req: Request, res: Response) : Prom
             if(entries && entries.length > 0){
                 console.log("Entries found for chapter: " + chapterId);
                 for(const entry of entries){
+                    console.log("title of entry: " + entry.title);
                     entry.imageUrl = entry.imageUrl?.map(url => url.replace('reflectimages.', 'reflectimages2.'));
                 }
             }
@@ -36,8 +38,8 @@ export const getAllEntriesOfChapter = async (req: Request, res: Response) : Prom
             res.status(200).json(entries);
         }
         else{
-            console.log("User already has latest data");
-            res.status(304).json({message: "User already has latest data"});
+            console.log("User already has latest Entries for chapter");
+            res.status(304).json({message: "User already has latest data for entries"});
         }
         
     } catch (error: any){

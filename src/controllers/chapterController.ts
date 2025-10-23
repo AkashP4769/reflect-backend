@@ -22,8 +22,8 @@ export const getChapters = async (req: Request, res: Response) : Promise<void> =
             res.status(200).json(chapters);
         }
         else{
-            console.log("user already has latest data");
-            res.status(304).json({message: "User already has latest data"});
+            console.log("user already has latest data for chapters");
+            res.status(304).json({message: "User already has latest data for chapters"});
         }
     } catch(error: any){
         console.log(error.message);

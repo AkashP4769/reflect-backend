@@ -21,8 +21,9 @@ const chapterSchema: Schema = new Schema({
     entryCount: {type: Number, required: true},
     encrypted: {type: Boolean, default: false},
     entries: [{
-        title: { type: String, required: true },
+        title: { type: String },
         content: { type: Array<{ [key: string]: any }> },  // Use dynamic keys for content
+        subsections: [{ type: Schema.Types.Mixed }],
         date: { type: Date, required: true },
         tags: { type: Array<{ [key: string]: any }> },  // Use dynamic keys for content
         chapterId: { type: String, required: true },

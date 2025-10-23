@@ -25,7 +25,7 @@ class TimestampService{
             entriesOfChapter?.push({chapterId: chapterId, updatedAt: new Date()});
         }
 
-        console.log("Entries of chapter: " + entriesOfChapter);
+        //console.log("Entries of chapter: " + entriesOfChapter);
 
         return User.findOneAndUpdate({uid: uid}, { $set: { 'updateTimestamp.entriesOfChapter': entriesOfChapter } }, {new: true}).exec();
     }
