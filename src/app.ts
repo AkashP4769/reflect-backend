@@ -7,8 +7,13 @@ import connectDB from './config/db';
 import chapterRoutes from './routes/chapterRoutes';
 import entryRoutes from './routes/entryRoutes';
 import imageRoutes from './routes/imageRoutes';
+import EntryService from './services/entryService';
 
 dotenv.config();
+
+const migrate = async () => {
+  await EntryService.migrateTimestamps();
+}
 
 const app = express();
 app.use(cors());
@@ -29,6 +34,7 @@ app.use(express.json());
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript with Express!.. DOes it edit now');
 });
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/chapters', chapterRoutes);

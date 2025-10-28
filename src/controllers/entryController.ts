@@ -14,6 +14,13 @@ export const getAllEntriesOfChapter = async (req: Request, res: Response) : Prom
         if(_explicit){
             console.log("explicit fetching");
             const entries = await EntryService.getEntries(chapterId as string);
+
+            if(entries && entries.length > 0){
+                for(const entry of entries){
+                console.log("title of entry: " + entry.title);
+                entry.imageUrl = entry.imageUrl?.map(url => url.replace('reflectimages.', 'reflectimages2.'));
+                }
+            }
             res.status(200).json(entries);
             return;
         }

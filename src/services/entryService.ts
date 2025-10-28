@@ -100,6 +100,32 @@ class EntryService{
         }
         return entry;
     }
+
+    public async migrateTimestamps() : Promise<void>{
+        let chapterDateUpdatedCount = 0;
+        let entryDateUpdatedCount = 0;
+
+        const chapters = await Chapter.find();
+        for(const chapter of chapters){
+            if(chapter.entries){
+                //subtract 5:30 hours from each entry date
+                if(chapter.date){
+                    chapter.date = new Date(chapter.date.getTime() - (5*60 + 30)*60000);
+                    chapterDateUpdatedCount++;
+                }
+                for(const entry of chapter.entries){
+                    if(entry.date){
+                        entry.date = new Date(entry.date.getTime() - (5*60 + 30)*60000);
+                        entryDateUpdatedCount++;
+                    }
+                }
+                await chapter.save();
+            }
+        }
+
+        console.log("Chapter dates updated: " + chapterDateUpdatedCount);
+        console.log("Entry dates updated: " + entryDateUpdatedCount);
+    }
 }
 
 export default new EntryService();
