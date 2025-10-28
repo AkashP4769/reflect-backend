@@ -1,7 +1,6 @@
 // src/app.ts
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import serverless from '@hono/node-server'; // or 'serverless-http'
 import userRoutes from './routes/userRoutes';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
