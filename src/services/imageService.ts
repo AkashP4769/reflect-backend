@@ -29,10 +29,16 @@ class ImageService{
       
     public async deleteImageFromS3 (fileKey: string): Promise<void> {
         try {
-            //if(!fileKey.startsWith('https://reflectimages')) return;
+            if (typeof fileKey !== "string") {
+              console.error("Invalid fileKey type:", fileKey);
+              console.log("fileKey value:", fileKey, "type:", typeof fileKey);
+              return;
+            }
+
+            if (!fileKey.startsWith("https://reflectimages")) return;
 
             const params = {
-            Bucket: process.env.AWS_S3_BUCKET_NAME || 'reflectimages',
+            Bucket: process.env.AWS_S3_BUCKET_NAME || 'reflectimages2',
             Key: fileKey,
             };
 

@@ -61,11 +61,14 @@ export const deleteChapter = async (req: Request, res: Response) : Promise<void>
 
         if(chapter){
             console.log("Chapter deleted! " + id);
-            if(chapter.imageUrl) for(const image of chapter.imageUrl) await imageService.deleteImageFromS3(image);
-            if(chapter.entries) for(const entry of chapter.entries) if(entry.imageUrl) for(const image of entry.imageUrl) await imageService.deleteImageFromS3(image);
+            if(chapter.imageUrl) for(const image in chapter.imageUrl) await imageService.deleteImageFromS3(chapter.imageUrl[image]);
+            if(chapter.entries) for(const entry of chapter.entries) if(entry.imageUrl) for(const image in entry.imageUrl) await imageService.deleteImageFromS3(entry.imageUrl[image]);
 
             timestampService.updateChapterTimestamp(uid as string);
             res.status(200).json(chapter);
+        }
+        else{
+            res.status(404).json({message: "Chapter not found"});
         }
     } catch(error: any){
         console.log(error.message);
